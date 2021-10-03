@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Users</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{css/all.css}" />
+</head>
+<body>
+<div class="container">
+<h1>All Users</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Password</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="details : ${details}">
+      <th th:text="${details.id}"></th>
+      <td th:text="${details.name}"></td>
+      <td th:text="${details.email}"></td>
+      <td th:text="${details.password}"></td>
+      <td><a th:href="@{update-details/{id}(id=${details.id})}">Edit</a></td>
+      <td><a th:href="@{delete-details/{id}(id=${details.id})}">Delete</a></td>
+      
+    </tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>
