@@ -33,10 +33,22 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/all-users")
-	public String getAll(Model m) {
+	@GetMapping("/all-users/{firstPage}")
+	public String getAll(@PathVariable("firstPage") int pageNo, Model m) {
+		
 		List<Details> list = dao.getAllUsers();	
-		m.addAttribute("details", list);
+		List<Details> page = dao.getAllUsersOne(pageNo);
+		long totalPages = dao.totalPages();
+		if(totalPages % 8==0) {
+			totalPages = (totalPages/8);
+		}else {
+			totalPages = (totalPages/8)+1;
+		}
+		System.out.println(totalPages);
+		m.addAttribute("details", page);
+		m.addAttribute("pageNo", pageNo);
+		m.addAttribute("totalPages", totalPages);
+		
 		return "users";
 	}
 	
@@ -51,14 +63,14 @@ public class HomeController {
 	public String update(@ModelAttribute("details") Details details, Model m) {
 		System.out.println(details);
 		dao.updateDetails(details);
-		return "redirect:/all-users";
+		return "redirect:/all-users/1";
 		
 	}
 	
 	@GetMapping("/delete-details/{id}")
 	public String delete(@PathVariable("id") int id, Model m) {
 		dao.deleteDetails(id);
-		return "redirect:/all-users";
+		return "redirect:/all-users/1";
 	}
 
 }

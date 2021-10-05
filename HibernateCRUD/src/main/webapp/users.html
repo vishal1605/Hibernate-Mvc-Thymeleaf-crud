@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <title>Users</title>
-<link rel="stylesheet" th:href="@{css/bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
 <link rel="stylesheet" th:href="@{css/all.css}" />
+<link rel="stylesheet" th:href="@{/css/index.css}" />
 </head>
 <body>
 <div class="container">
+<h1><a th:href="@{/}">Add new member</a></h1><br/>
 <h1>All Users</h1>
 
 <table class="table">
@@ -27,12 +29,25 @@
       <td th:text="${details.name}"></td>
       <td th:text="${details.email}"></td>
       <td th:text="${details.password}"></td>
-      <td><a th:href="@{update-details/{id}(id=${details.id})}">Edit</a></td>
-      <td><a th:href="@{delete-details/{id}(id=${details.id})}">Delete</a></td>
+      <td><a th:href="@{/update-details/{id}(id=${details.id})}">Edit</a></td>
+      <td><a th:href="@{/delete-details/{id}(id=${details.id})}">Delete</a></td>
       
     </tr>
   </tbody>
 </table>
+
+<div class="container">
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" th:if="${pageNo != 1}" ><a class="page-link" href="#" th:href="@{/all-users/{firstPage}(firstPage=${pageNo-1})}">Previous</a></li>
+    <li th:each="i : ${#numbers.sequence(1,totalPages)}" th:classappend="${pageNo==i ? 'active' : ' '}" class="page-item"><a class="page-link" th:href="@{/all-users/{firstPage}(firstPage=${i})}"><span th:text="${i}"></span></a></li>
+    <li class="page-item" th:if="${pageNo != totalPages}" ><a class="page-link" href="#" th:href="@{/all-users/{firstPage}(firstPage=${pageNo+1})}">Next</a></li>
+  </ul>
+</nav>
+<!-- <a th:each="i : ${#numbers.sequence(1,totalPages)}" th:href="@{/all-users/{firstPage}(firstPage=${i})}"><span th:text="${i}"></span></a> -->
+
+</div>
 
 </div>
 </body>
