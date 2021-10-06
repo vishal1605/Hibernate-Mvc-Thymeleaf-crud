@@ -39,7 +39,11 @@ public class HomeController {
 		List<Details> list = dao.getAllUsers();	
 		List<Details> page = dao.getAllUsersOne(pageNo);
 		long totalPages = dao.totalPages();
-		totalPages = (totalPages/8)+1;
+		if(totalPages % 8==0) {
+			totalPages = (totalPages/8);
+		}else {
+			totalPages = (totalPages/8)+1;
+		}
 		System.out.println(totalPages);
 		m.addAttribute("details", page);
 		m.addAttribute("pageNo", pageNo);
